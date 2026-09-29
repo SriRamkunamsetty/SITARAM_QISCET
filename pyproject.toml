@@ -5,7 +5,7 @@ description = "India-calibrated metabolic digital twin for Type 2 Diabetes with 
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.11"
-authors = [{ name = "Team Pratibimb" }]
+authors = [{ name = "Mohan Sriram Kunamsetty" }, { name = "Mohana Lakshmi Srija Kunamsetty" }]
 dependencies = [
     "numpy>=1.26",
     "pydantic>=2.6",

@@ -7,34 +7,81 @@ their finger** so a small strip budget reveals the most about upcoming hypoglyca
 
 > ⚠️ Research prototype. Not a medical device. No dosing advice. See [MODEL_CARD.md](MODEL_CARD.md).
 
-| | |
-|---|---|
-| **Team** | _TODO: team name, members, roles_ |
-| **College / incubator** | _TODO_ |
-| **Video (2–5 min)** | _TODO: unlisted YouTube link_ |
-| **Architecture diagram** | _TODO: `docs/architecture.pdf`_ |
-| **Presentation** | _TODO: `docs/presentation.pdf`_ |
-| **Licence** | Apache-2.0 ([LICENSE](LICENSE), [NOTICE](NOTICE)) |
+## ✅ Submission checklist (Digital Twin Challenge 2026)
+
+| # | Requirement | Status | Where |
+|---|---|---|---|
+| 1 | Team details | ✅ Done | [Team details](#1-team-details) |
+| 2 | College / incubator information | ✅ Done | [College / incubator](#2-college--incubator-information) |
+| 3 | Project title | ✅ Done | [Project title](#3-project-title) |
+| 4 | Problem statement | ✅ Done | [Problem statement](#4-problem-statement) |
+| 5 | Healthcare use case | ✅ Done | [Healthcare use case](#5-healthcare-use-case) |
+| 6 | Technical stack | ✅ Done | [Technical stack](#9-technical-stack) |
+| 7 | AI/ML model or framework details | ✅ Done | [AI/ML model details](#8-aiml-model-and-framework-details) |
+| 8 | 15–20 minute demo video (unlisted YouTube), link in README | ⬜ To do | [Demo video](#11-demo-video) |
+| 9 | Open-source licence details | ✅ Done | [Licence](#15-open-source-licence) |
+| 10 | Architecture diagram (PDF/PPT) | ⬜ To do | [Architecture diagram](#12-architecture-diagram-pdfppt) |
+| 11 | Presentation (PDF/PPT) covering project details and outcomes | ⬜ To do | [Presentation](#13-presentation-pdfppt) |
+| 12 | All files and links publicly accessible without extra permissions | ⬜ To do | [Accessibility](#16-public-accessibility) |
+
+### To-do before submission (deadline: 20 Oct 2026, 7:00 PM IST)
+
+- [ ] Record the **15–20 minute demo video**, upload it to YouTube as **Unlisted**, and paste the link in [Demo video](#11-demo-video)
+- [ ] Create the **architecture diagram** (PDF or PPT) and save it as `docs/architecture.pdf` (or `.pptx`)
+- [ ] Create the **presentation** (PDF or PPT) covering project details and outcomes, and save it as `docs/presentation.pdf` (or `.pptx`)
+- [ ] Rename the repository to `TeamName_CollegeName` (e.g. `SITARAM_QISCET`)
+- [ ] Make the repository **public** and check that every link (video, PDFs) opens in a logged-out/incognito browser
+- [ ] Validate on real open data (ShanghaiT2DM) and update [Results](#10-results--strip-budget-experiment)
+- [ ] Submit the team leader's name, phone number, email and the public repo link on the submission platform
 
 ---
 
-## 1. Problem and healthcare use case
+## 1. Team details
+
+**Team name:** SITARAM
+
+| Name | Role | College |
+|---|---|---|
+| Mohan Sriram Kunamsetty | Team Leader | QIS College of Engineering and Technology |
+| Mohana Lakshmi Srija Kunamsetty | Team Member | RISE Krishna Sai College of Engineering and Technology |
+
+## 2. College / incubator information
+
+This is an **inter-college team**, which the challenge rules allow:
+
+- **QIS College of Engineering and Technology**: Mohan Sriram Kunamsetty (Team Leader)
+- **RISE Krishna Sai College of Engineering and Technology**: Mohana Lakshmi Srija Kunamsetty (Team Member)
+
+## 3. Project title
+
+**Pratibimb: an India-calibrated metabolic digital twin for Type 2 Diabetes that decides when to test**
+
+## 4. Problem statement
 
 India has ~101 million people with diabetes (ICMR-INDIAB-17). Sulfonylureas are cheap and widely
 prescribed, and they cause hypoglycaemia that is frequently **nocturnal and asymptomatic**
 (Middleton et al., *Diabetes Care* 2017: 67% nocturnal, 73% asymptomatic). A CGM would reveal it,
-but a sensor costs ₹4,200–5,250 per 14 days (≈ ₹9,000/month), so most patients rely on a few
-fingersticks taken at habitual times (fasting, 2-h post-breakfast) that rarely coincide with risk.
+but a sensor costs ₹4,200–5,250 per 14 days (≈ ₹9,000/month). Most patients therefore rely on a few
+fingersticks taken at habitual times (fasting, 2-h post-breakfast), and these rarely coincide with risk.
 
-**Question:** if a patient can afford only 1–4 strips a day, *when* should they test?
+**Question:** if a patient can afford only 1–4 strips a day, *when* should they test so that
+dangerous lows are predicted before they happen?
 
-**Use case:** a doctor enrolls a patient from the EHR (age, BMI, waist, HbA1c, fasting glucose,
-regimen). The twin starts from an India-specific physiological prior, learns the patient's own
-insulin sensitivity, basal glucose and sulfonylurea response from each reading, and each morning
-recommends the most informative testing times. At bedtime it reports overnight hypoglycaemia risk
-with an uncertainty band.
+## 5. Healthcare use case
 
-## 2. Why this is a digital twin (NASEM 2023 definition)
+1. **Enrol:** a doctor creates the patient's twin from the EHR summary (age, BMI, waist, HbA1c,
+   fasting glucose, medication regimen) plus an optional smartwatch summary (resting HR, steps).
+2. **Personalise:** the twin starts from an India-specific physiological prior (INSPIRED endotypes).
+   It then learns the patient's own insulin sensitivity, basal glucose and sulfonylurea response
+   from each fingerstick or CGM reading, together with the logged meals and doses.
+3. **Plan:** each morning the twin recommends the **most informative testing times** for the
+   patient's strip budget, and re-plans after every reading.
+4. **Warn:** at bedtime it reports **overnight hypoglycaemia risk** with an uncertainty band, so the
+   doctor can review the sulfonylurea dose or advise a bedtime snack.
+5. **Audit:** every number the twin reports can be traced back to the exact readings and events
+   behind it.
+
+## 6. Why this is a digital twin (NASEM 2023 definition)
 
 | NASEM element | Pratibimb |
 |---|---|
@@ -45,7 +92,7 @@ with an uncertainty band.
 | Two-way flow | The twin *requests* data from the patient (test at 16:30) and updates on what it receives |
 | VVUQ | Unit-tested physics, known-truth evaluation, bootstrap CIs, heavy-tailed likelihood, full audit log |
 
-## 3. How it works
+## 7. How it works (architecture)
 
 ```mermaid
 flowchart LR
@@ -78,7 +125,37 @@ flowchart LR
 5. **Event-sourced engine + API** (`twin/engine.py`, `api/`): every input is an immutable event;
    late data trigger deterministic replay; the full record is exportable for audit.
 
-## 4. Results — strip-budget experiment
+## 8. AI/ML model and framework details
+
+Pratibimb is a **hybrid physiological + probabilistic AI** system. It does not use a black-box
+classifier. Each component is interpretable and uncertainty-aware:
+
+| Component | Method | Why |
+|---|---|---|
+| Mechanistic core | Extended Bergman minimal model: 10 states, 6 patient parameters, vectorised RK4 ODE solver | Physiologically meaningful parameters; valid what-if simulation |
+| Personalised prior | Gaussian naive-Bayes soft assignment to the 4 INSPIRED Indian T2D endotypes, then a moment-matched log-normal prior; wearable covariates (resting HR, steps) shift insulin sensitivity | A sensible twin from day 1, specific to Indian patients |
+| Data assimilation (learning) | Sequential Monte Carlo: joint state + parameter particle filter, 1,000 particles, Student-t likelihood, Liu–West kernel resampling, random-walk parameter drift | Learns each patient online from sparse, noisy data, with full posterior uncertainty |
+| Prediction | Posterior-predictive ensemble forecasts; event probabilities (glucose < 70 mg/dL or < 54 mg/dL for ≥ 15 min; > 250 mg/dL) | Calibrated risk instead of a point guess |
+| Decision AI (active sensing) | Bayesian experimental design: greedy maximisation of mutual information between future readings and hypoglycaemia events, estimated by nested Monte Carlo | Chooses **when** to test for the most information per strip |
+| Evaluation | Known-truth virtual cohort, common random numbers across policies, AUROC, Brier score, patient-level paired bootstrap | Honest comparison against standard testing schedules |
+
+**Frameworks:** NumPy (all modelling and inference, no GPU required), FastAPI + Pydantic v2 (service),
+matplotlib (evaluation plots).
+
+## 9. Technical stack
+
+| Layer | Technology |
+|---|---|
+| Language | Python 3.11+ |
+| Modelling, inference, planning | NumPy |
+| API | FastAPI, Pydantic v2, Uvicorn |
+| Persistence | Event-sourced JSON event logs (replayable audit trail) |
+| Packaging | uv, hatchling |
+| Quality | pytest (29 tests), ruff, mypy |
+| CI/CD | GitHub Actions (Python 3.11 and 3.12, Docker build) |
+| Deployment | Docker (non-root, health check, persistent volume) |
+
+## 10. Results — strip-budget experiment
 
 40 sulfonylurea-treated virtual Indian patients (HbA1c ≤ 8%), 7 evaluation days each, 1,120 risk
 windows. At the start of each window (morning, afternoon, evening, and night at 22:30 bedtime) the twin
@@ -114,7 +191,21 @@ The objective can be re-weighted toward time-in-range if a clinician wants that 
 3. Night-time lows are under-represented in the synthetic cohort (see DATA.md).
 4. Real-data validation (ShanghaiT2DM) is the next milestone.
 
-## 5. Quick start
+## 11. Demo video
+
+**Length:** 15–20 minutes · **Platform:** YouTube (Unlisted)
+
+> ⬜ **To do:** add the link here, e.g. `https://youtu.be/XXXXXXXXXXX`
+
+## 12. Architecture diagram (PDF/PPT)
+
+> ⬜ **To do:** add `docs/architecture.pdf` (or `.pptx`). The diagram in [How it works](#7-how-it-works-architecture) is the source for it.
+
+## 13. Presentation (PDF/PPT)
+
+> ⬜ **To do:** add `docs/presentation.pdf` (or `.pptx`) covering project details and outcomes.
+
+## 14. Quick start
 
 ```bash
 uv sync --all-extras          # Python 3.11+, installs deps into .venv
@@ -141,13 +232,19 @@ Docker: `docker build -t pratibimb . && docker run -p 8000:8000 -v twins:/data/t
 Configuration: `PRATIBIMB_API_KEY` (require `X-API-Key`), `PRATIBIMB_DATA_DIR` (persist event logs),
 `PRATIBIMB_CORS_ORIGINS`. All timestamps must carry a timezone (e.g. `+05:30`).
 
-## 6. Technical stack
+## 15. Open-source licence
 
-Python 3.11 · NumPy (vectorised ODE + particle filter + information-theoretic planner) ·
-FastAPI + Pydantic v2 · uv · pytest · ruff · GitHub Actions · Docker. No deep-learning
-framework is needed for the core; the model is small, interpretable and fast.
+This project is licensed under the **Apache License 2.0**. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+Anyone may use, modify and distribute the code, including commercially. The licence includes an
+express patent grant and requires attribution. Third-party datasets are **not** redistributed;
+each has its own licence (see [DATA.md](DATA.md)).
 
-## 7. Data, privacy and regulation
+## 16. Public accessibility
+
+> ⬜ **To do before submission:** make this repository public, and check that the video, the
+> architecture diagram and the presentation all open without logging in.
+
+## 17. Data, privacy and regulation
 
 - Only synthetic and open data; no clinical data in the repo ([DATA.md](DATA.md)).
 - Designed toward the DPDP Act 2023 / Rules 2025: data minimisation (no names or identifiers in
@@ -155,7 +252,7 @@ framework is needed for the core; the model is small, interpretable and fast.
 - CDSCO's Draft Guidance on Medical Device Software (21 Oct 2025) would classify a clinical version
   as SaMD; this prototype makes no clinical claims.
 
-## 8. Roadmap
+## 18. Roadmap
 
 - [ ] Real-data validation on ShanghaiT2DM (`scripts/download_data.py shanghai`) and CGMacros
 - [ ] Conformal calibration of forecast bands; calibration plots
