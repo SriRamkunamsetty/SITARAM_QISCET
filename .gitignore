@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+
+# Data: never commit raw clinical datasets (licence + privacy). Use scripts/ to download.
+data/raw/
+data/external/
+*.zip
+twin_store/
+
+# Experiment scratch (curated results are committed explicitly)
+results/**/raw.json
+results/*.log
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

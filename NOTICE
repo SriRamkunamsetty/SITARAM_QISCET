@@ -1,0 +1,10 @@
+Pratibimb — India-calibrated metabolic digital twin for Type 2 Diabetes
+Copyright 2026 Team Pratibimb
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product is a research prototype. It is not a medical device, has not been clinically
+validated, and must not be used to make treatment or dosing decisions.
+
+Third-party data and evidence used for calibration are cited in DATA.md and MODEL_CARD.md.
+No third-party clinical data are redistributed in this repository.
