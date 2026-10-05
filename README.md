@@ -20,16 +20,16 @@ their finger** so a small strip budget reveals the most about upcoming hypoglyca
 | 7 | AI/ML model or framework details | ✅ Done | [AI/ML model details](#8-aiml-model-and-framework-details) |
 | 8 | 15–20 minute demo video (unlisted YouTube), link in README | ⬜ To do | [Demo video](#11-demo-video) |
 | 9 | Open-source licence details | ✅ Done | [Licence](#15-open-source-licence) |
-| 10 | Architecture diagram (PDF/PPT) | ⬜ To do | [Architecture diagram](#12-architecture-diagram-pdfppt) |
-| 11 | Presentation (PDF/PPT) covering project details and outcomes | ⬜ To do | [Presentation](#13-presentation-pdfppt) |
+| 10 | Architecture diagram (PDF/PPT) | ✅ Done | [`docs/architecture.pdf`](docs/architecture.pdf) |
+| 11 | Presentation (PDF/PPT) covering project details and outcomes | ✅ Done | [`docs/presentation.pdf`](docs/presentation.pdf), [`.pptx`](docs/presentation.pptx) |
 | 12 | All files and links publicly accessible without extra permissions | ⬜ To do | [Accessibility](#16-public-accessibility) |
 
 ### To-do before submission (deadline: 20 Oct 2026, 7:00 PM IST)
 
 - [ ] Record the **15–20 minute demo video**, upload it to YouTube as **Unlisted**, and paste the link in [Demo video](#11-demo-video)
-- [ ] Create the **architecture diagram** (PDF or PPT) and save it as `docs/architecture.pdf` (or `.pptx`)
-- [ ] Create the **presentation** (PDF or PPT) covering project details and outcomes, and save it as `docs/presentation.pdf` (or `.pptx`)
-- [ ] Rename the repository to `TeamName_CollegeName` (e.g. `SITARAM_QISCET`)
+- [x] ~~Create the **architecture diagram**~~ → [`docs/architecture.pdf`](docs/architecture.pdf)
+- [x] ~~Create the **presentation**~~ → [`docs/presentation.pdf`](docs/presentation.pdf) and [`docs/presentation.pptx`](docs/presentation.pptx)
+- [x] ~~Rename the repository to `TeamName_CollegeName`~~ → `SITARAM_QISCET`
 - [ ] Make the repository **public** and check that every link (video, PDFs) opens in a logged-out/incognito browser
 - [ ] Validate on real open data (ShanghaiT2DM) and update [Results](#10-results--strip-budget-experiment)
 - [ ] Submit the team leader's name, phone number, email and the public repo link on the submission platform
@@ -177,7 +177,9 @@ every policy. Full table: [`results/strip_budget/summary.md`](results/strip_budg
 fasting / post-breakfast schedule at every budget. The paired, patient-level bootstrap Brier
 improvement excludes zero at every budget: at 1 strip it is +0.008 [95% CI +0.002, +0.016]. The twin
 also uses *fewer* strips: it skips readings that would not change the risk estimate. **Under one
-strip a day, its risk prediction comes close to a CGM's.**
+strip a day, its risk prediction comes close to a CGM's.** At 3-4 strips a day a *random* schedule
+does about as well as the twin (the Brier difference vs random includes zero), so the advantage is
+specific to very small strip budgets, which is the realistic case for patients who cannot afford a CGM.
 
 **Trade-off.** The planner optimises information about *hypoglycaemia*, not general glucose tracking.
 Mean tracking error is higher than the fixed schedule's (e.g. 14.1 vs 10.4 mg/dL at a budget of 3).
@@ -199,11 +201,19 @@ The objective can be re-weighted toward time-in-range if a clinician wants that 
 
 ## 12. Architecture diagram (PDF/PPT)
 
-> ⬜ **To do:** add `docs/architecture.pdf` (or `.pptx`). The diagram in [How it works](#7-how-it-works-architecture) is the source for it.
+📄 **[`docs/architecture.pdf`](docs/architecture.pdf)** (vector PDF) · PNG: [`docs/figures/architecture.png`](docs/figures/architecture.png)
+
+![architecture](docs/figures/architecture.png)
 
 ## 13. Presentation (PDF/PPT)
 
-> ⬜ **To do:** add `docs/presentation.pdf` (or `.pptx`) covering project details and outcomes.
+📄 **[`docs/presentation.pdf`](docs/presentation.pdf)** · editable: [`docs/presentation.pptx`](docs/presentation.pptx) (13 slides with speaker notes for the video)
+
+Covers the problem, idea, healthcare use case, why it is a digital twin, architecture, AI/ML methods, evaluation design, results, limitations, a conceptual clinician dashboard, safety and regulation, and the roadmap.
+
+**Conceptual clinician dashboard** (drawn from real twin output on a synthetic patient; the interactive dashboard is on the roadmap):
+
+![dashboard mock-up](docs/figures/dashboard_mockup.png)
 
 ## 14. Quick start
 
@@ -213,6 +223,8 @@ uv run pytest                 # 29 tests: physiology, endotypes, filter, planner
 uv run python scripts/demo_day.py                     # one simulated day through the HTTP API
 uv run uvicorn pratibimb.api.app:app --reload         # API + interactive docs at /docs
 uv run pratibimb-strip-experiment --patients 40 --days 7 --workers 8   # reproduce results
+uv run python scripts/build_docs.py                   # rebuild architecture PDF, dashboard mock-up, slides
+powershell -File scripts/export_pdf.ps1               # slides -> PDF (Windows + PowerPoint)
 ```
 
 Docker: `docker build -t pratibimb . && docker run -p 8000:8000 -v twins:/data/twins pratibimb`
